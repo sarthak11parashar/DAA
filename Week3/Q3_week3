@@ -1,0 +1,77 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int partition(int arr[], int si, int ei)
+{
+    int count=0;
+    for(int i=si+1; i<=ei; i++){
+        if(arr[i]<=arr[si]){
+            count++;
+        }
+    }
+    int partitionIndex = si+count;
+    swap(arr[si],arr[partitionIndex]);
+    int piviot = arr[partitionIndex];
+    int i=si;
+    int j=ei;
+
+    while (i<=partitionIndex && j>=partitionIndex)
+    {
+        if (arr[i]<=piviot){
+            i++;
+        }
+        else if(arr[j]>=piviot){
+            j--;
+        }
+        else{
+            swap(arr[i],arr[j]);
+            i++;
+            j--;
+        }
+    }
+    return partitionIndex;
+}
+
+void quickSort(int arr[], int si, int ei){
+    if(si>=ei){
+        return;
+    }
+    int PartitionIndex = partition(arr,si,ei);
+    quickSort(arr,si,PartitionIndex-1);
+    quickSort(arr,PartitionIndex+1, ei);
+}
+
+
+void findDuplicates(int arr[], int n){
+    int si = 0;
+    int ei = n-1;
+    quickSort(arr,si,ei);
+    int flag = 0;
+    for(int i=1; i<n; i++){
+        if(arr[i-1] == arr[i]){
+            cout<<"YES ";
+            flag=1;
+            break;
+        }
+    }
+    if(flag == 0){
+        cout<<"NO ";
+    }
+}
+
+int main(){
+    int t;
+    cin>>t;
+    while (t--)
+    {
+        int n;
+        cin >> n;
+        int arr[n];
+        for (int i = 0; i < n; ++i) {
+            cin>>arr[i];
+        }
+        findDuplicates(arr,n);
+        cout << endl;
+    }
+}
+

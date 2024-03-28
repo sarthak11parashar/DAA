@@ -1,0 +1,72 @@
+#include <iostream>
+using namespace std;
+
+int partition(int arr[], int si, int ei, int &comparision, int &swaps)
+{
+    int partition_index = rand() % (ei - si + 1) + si;
+    int pivot = arr[partition_index];
+    swap(arr[si], arr[partition_index]);
+    swaps++;
+    int i = si + 1; 
+    int j = ei;
+    while (i <= j)
+    {
+        if (arr[i] <= pivot)
+        {
+            i++;
+        }
+        else if (arr[j] >= pivot)
+        {
+            j--;
+        }
+        else
+        {
+            swap(arr[i], arr[j]);
+            i++;
+            j--;
+            swaps++;
+        }
+        comparision++;
+    }
+    swap(arr[si], arr[j]); 
+    swaps++;
+    return j; 
+}
+
+
+
+void quick_sort(int arr[], int si, int ei, int &comparision, int &swaps)
+{
+    if (si >= ei)
+    {
+        return;
+    }
+    int Pindex = partition(arr, si, ei, comparision, swaps);
+    quick_sort(arr, si, Pindex - 1, comparision, swaps);
+    quick_sort(arr, Pindex + 1, ei, comparision, swaps);
+}
+
+int main(){
+    int t;
+    cin>>t;
+    while (t--)
+    {
+        int n;
+        cin >> n;
+        int arr[n];
+        for (int i = 0; i < n; ++i) {
+            cin>>arr[i];
+        }
+        int comparision=0;
+        int swaps = 0;
+
+        quick_sort(arr,0,n-1, comparision, swaps);
+
+        for(int i=0; i<n; i++){
+        cout<<" "<<arr[i];
+        }
+
+        cout<<endl<<"Comparisions:"<<comparision<<endl;
+        cout<<"Swaps:"<<swaps;
+    }
+}

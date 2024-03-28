@@ -1,0 +1,42 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+void max_occurrence(char arr[], int n){
+    int count[26] = {0};
+    for (int i=0; i<n; i++)
+    {
+        char c = arr[i];
+        count[c-'a']++;
+    }
+    int max_count = 0;
+    char max_char = '\0';
+
+    for(int i=0; i<26; i++){
+        if(count[i] > max_count){
+            max_count = count[i];
+            max_char = 'a' + i;
+        }
+    }
+
+    if(max_count > 1){
+        cout<<max_char<<"-"<<max_count<<endl;
+    }
+    else
+        cout<<"No duplicate present" << endl; 
+}
+
+int main(){
+    int testcases;
+    cin>>testcases;
+    for (int t=0; t<testcases; t++)
+    {
+        int n;
+        cin>>n;
+        char arr[n];
+        for (int i = 0; i < n; i++){
+            cin >> arr[i];
+        }
+        max_occurrence(arr,n);
+    }
+}
